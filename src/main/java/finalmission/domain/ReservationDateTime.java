@@ -1,0 +1,29 @@
+package finalmission.domain;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import lombok.Getter;
+
+@Entity
+@Getter
+public class ReservationDateTime {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDate date;
+    private LocalTime startAt;
+
+    public ReservationDateTime(final Long id, final LocalDate date, final LocalTime startAt) {
+        this.id = id;
+        this.date = date;
+        this.startAt = startAt;
+    }
+
+    public ReservationDateTime() {
+    }
+}
