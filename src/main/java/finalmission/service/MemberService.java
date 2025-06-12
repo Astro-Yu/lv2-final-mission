@@ -17,4 +17,9 @@ public class MemberService {
         Member member = request.toMember();
         return memberRepository.save(member);
     }
+
+    public Member findMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow();
+    }
 }

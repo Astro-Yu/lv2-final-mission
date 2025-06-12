@@ -1,5 +1,6 @@
 package finalmission.infrastructure.jwt;
 
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -21,5 +22,17 @@ public class JwtTokenProvider {
                 .setExpiration(new Date(jwtProperties.validTime()))
                 .signWith(Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8)))
                 .compact();
+    }
+
+    public String extractSubject(String token) {
+        return createTokenParser()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    private JwtParser createTokenParser() {
+        return Jwts.parser().verifyWith(Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8)))
+                .build();
     }
 }

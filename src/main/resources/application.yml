@@ -20,3 +20,6 @@ auth:
     valid-time: 1800000
   cookie:
     max-age: 1800
+randommer:
+  base-url: https://randommer.io
+  api-key: 528e49160998431989f9ce1895086d3b
