@@ -6,6 +6,7 @@ import finalmission.dto.response.ReservationDateTimeResponse;
 import finalmission.service.ReservationDateTimeService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +35,11 @@ public class ReservationDateTimeController {
         ReservationDateTimeResponse response = ReservationDateTimeResponse.from(reservationDateTime);
 
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteReservationTime(Long id) {
+        reservationDateTimeService.deleteReservationDateTime(id);
+        return ResponseEntity.noContent().build();
     }
 }
