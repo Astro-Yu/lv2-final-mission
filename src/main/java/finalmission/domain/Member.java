@@ -1,5 +1,6 @@
 package finalmission.domain;
 
+import finalmission.exception.LoginFailedException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,5 +26,11 @@ public class Member {
     }
 
     public Member() {
+    }
+
+    public void validatePassword(String password) {
+        if (!this.password.equals(password)) {
+            throw new LoginFailedException();
+        }
     }
 }
