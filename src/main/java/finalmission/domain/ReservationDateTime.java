@@ -1,5 +1,6 @@
 package finalmission.domain;
 
+import finalmission.exception.InvalidReservationTimeException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,11 +25,22 @@ public class ReservationDateTime {
     private LocalTime startAt;
 
     public ReservationDateTime(final Long id, final LocalDate date, final LocalTime startAt) {
+        validateTime(startAt);
         this.id = id;
         this.date = date;
         this.startAt = startAt;
     }
 
     public ReservationDateTime() {
+    }
+
+    public static ReservationDateTime createWithoutId(LocalDate date, LocalTime startAt) {
+        return new ReservationDateTime(null, date, startAt);
+    }
+
+    private void validateTime(LocalTime time) {
+        if (time.isBefore(LocalTime.of(8, 0)) || time.isAfter(LocalTime.of(23, 0))) {
+            throw new InvalidReservationTimeException();
+        }
     }
 }
