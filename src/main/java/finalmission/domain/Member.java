@@ -35,6 +35,10 @@ public class Member {
     public Member() {
     }
 
+    public boolean isSameMember(Long memberId) {
+        return this.id.equals(memberId);
+    }
+
     public void validatePassword(String password) {
         if (!this.password.equals(password)) {
             throw new LoginFailedException();

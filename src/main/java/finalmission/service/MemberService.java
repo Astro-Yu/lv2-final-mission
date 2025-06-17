@@ -13,8 +13,8 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Member signUp(SignUpRequest request) {
-        Member member = request.toMember();
+    public Member signUp(SignUpRequest request, String randomName) {
+        Member member = request.toMember(randomName);
         return memberRepository.save(member);
     }
 
