@@ -24,14 +24,31 @@ public class Reservation {
 
     @Embedded
     private Guest guest;
+    private Price price;
 
-    public Reservation(final Long id, final ReservationDateTime dateTime, final Member member, final Guest guest) {
+    public Reservation(final Long id, final ReservationDateTime dateTime, final Member member, final Guest guest,
+                       final Price price) {
         this.id = id;
         this.dateTime = dateTime;
         this.member = member;
         this.guest = guest;
+        this.price = price;
     }
 
     public Reservation() {
+    }
+
+    public static Reservation createWithoutId(ReservationDateTime dateTime, Member member, Guest guest,
+                                              Price price) {
+        return new Reservation(null, dateTime, member, guest, price);
+    }
+
+    public boolean isReservedBy(Long memberId) {
+        return member.isSameMember(memberId);
+    }
+
+    public void updateReservation(ReservationDateTime dateTime, Guest guest) {
+        this.dateTime = dateTime;
+        this.guest = guest;
     }
 }
