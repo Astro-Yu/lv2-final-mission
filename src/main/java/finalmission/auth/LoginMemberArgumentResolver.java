@@ -1,9 +1,7 @@
 package finalmission.auth;
 
-import finalmission.domain.Member;
 import finalmission.infrastructure.jwt.CookieTokenExtractor;
 import finalmission.infrastructure.jwt.JwtTokenProvider;
-import finalmission.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -13,20 +11,19 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private final MemberService memberService;
     private final JwtTokenProvider tokenProvider;
     private final CookieTokenExtractor cookieTokenExtractor;
 
-    public LoginMemberArgumentResolver(final MemberService memberService, final JwtTokenProvider tokenProvider,
+    public LoginMemberArgumentResolver(final JwtTokenProvider tokenProvider,
                                        final CookieTokenExtractor cookieTokenExtractor) {
-        this.memberService = memberService;
         this.tokenProvider = tokenProvider;
         this.cookieTokenExtractor = cookieTokenExtractor;
     }
 
     @Override
     public boolean supportsParameter(final MethodParameter parameter) {
-        return parameter.getParameterType().equals(Member.class);
+        return parameter.getParameterAnnotation(Authenticated.class) != null && parameter.getParameterType()
+                .equals(Long.class);
     }
 
     @Override
@@ -37,9 +34,8 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String token = cookieTokenExtractor.extract(request)
                 .orElseThrow();
+        String subject = tokenProvider.extractSubject(token);
 
-        Long id = Long.parseLong(tokenProvider.extractSubject(token));
-
-        return memberService.findMemberById(id);
+        return Long.parseLong(subject);
     }
 }

@@ -7,7 +7,6 @@ spring:
   sql:
     init:
       mode: always
-      data-locations: classpath:data.sql
   # h2-console
   h2.console:
     enabled: true
@@ -21,5 +20,7 @@ auth:
   cookie:
     max-age: 1800
 randommer:
-  base-url: https://randommer.io
-  api-key: 528e49160998431989f9ce1895086d3b
+  base-url: https://randommer.io/api
+  api-key: "c0001fa7ea134610a170ca8f0a20a81e"
+  connect-timeout: 5000
+  read-timeout: 5000

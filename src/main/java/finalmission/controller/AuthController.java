@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(LoginRequest loginRequest) {
-        // 로그인 정보를 받아서 확인하고 토큰으로 만들어서 쿠키에 넣기
+    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest) {
         String token = authService.createToken(loginRequest);
         ResponseCookie cookie = ResponseCookie.from("token")
                 .value(token)

@@ -18,8 +18,8 @@ public class JwtTokenProvider {
 
     public String createToken(String payload) {
         return Jwts.builder()
-                .setSubject(payload)
-                .setExpiration(new Date(jwtProperties.validTime()))
+                .subject(payload)
+                .expiration(new Date(System.currentTimeMillis() + jwtProperties.validTime()))
                 .signWith(Keys.hmacShaKeyFor(jwtProperties.secretKey().getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
