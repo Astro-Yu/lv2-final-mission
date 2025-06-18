@@ -6,8 +6,10 @@ import finalmission.exception.LoginFailedException;
 import finalmission.infrastructure.MemberRepository;
 import finalmission.infrastructure.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class AuthService {
     private final JwtTokenProvider tokenProvider;
     private final MemberRepository memberRepository;

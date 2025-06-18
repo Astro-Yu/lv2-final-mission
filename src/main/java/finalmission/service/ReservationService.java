@@ -14,8 +14,10 @@ import finalmission.infrastructure.ReservationDateTimeRepository;
 import finalmission.infrastructure.ReservationRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final ReservationDateTimeRepository reservationDateTimeRepository;
@@ -26,6 +28,7 @@ public class ReservationService {
         this.reservationDateTimeRepository = reservationDateTimeRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Reservation> findReservationsByMemberId(Long memberId) {
         return reservationRepository.findByMemberId(memberId);
     }

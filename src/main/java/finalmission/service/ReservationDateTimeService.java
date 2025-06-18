@@ -6,8 +6,10 @@ import finalmission.exception.NotFoundDateTimeException;
 import finalmission.infrastructure.ReservationDateTimeRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ReservationDateTimeService {
     private final ReservationDateTimeRepository reservationDateTimeRepository;
 
@@ -15,6 +17,7 @@ public class ReservationDateTimeService {
         this.reservationDateTimeRepository = reservationDateTimeRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<ReservationDateTime> findReservationDateTimes() {
         return reservationDateTimeRepository.findAll();
     }
