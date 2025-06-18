@@ -93,8 +93,7 @@ public class ReservationApiTest {
         String token = jwtTokenProvider.createToken(member1.getId().toString());
 
         Map<String, Object> reservationRequest = new HashMap<>();
-        reservationRequest.put("date", "2025-05-05");
-        reservationRequest.put("startAt", "10:00");
+        reservationRequest.put("dateTimeId", "1");
         reservationRequest.put("guest", "10");
 
         //when & then
@@ -106,6 +105,7 @@ public class ReservationApiTest {
                 .then().log().all()
                 .statusCode(201)
                 .body("date", equalTo("2025-05-05"))
+                .body("startAt", equalTo("10:00:00"))
                 .body("guest", equalTo(10));
     }
 

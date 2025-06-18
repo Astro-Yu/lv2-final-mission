@@ -7,6 +7,8 @@ import finalmission.domain.Reservation;
 import finalmission.domain.ReservationDateTime;
 import finalmission.dto.request.ReservationRequest;
 import finalmission.dto.request.ReservationUpdateRequest;
+import finalmission.exception.NotFoundDateTimeException;
+import finalmission.exception.NotFoundReservationException;
 import finalmission.exception.UnauthorizedMemberException;
 import finalmission.infrastructure.ReservationDateTimeRepository;
 import finalmission.infrastructure.ReservationRepository;
@@ -29,8 +31,9 @@ public class ReservationService {
     }
 
     public Reservation createReservation(ReservationRequest request, Member member) {
-        ReservationDateTime reservationDateTime = reservationDateTimeRepository.findByDateAndStartAt(request.date(),
-                request.startAt());
+        ReservationDateTime reservationDateTime = reservationDateTimeRepository
+                .findById(request.dateTimeId())
+                .orElseThrow(NotFoundDateTimeException::new);
         Guest guest = new Guest(request.guest());
 
         Reservation reservation = Reservation.createWithoutId(
@@ -43,13 +46,13 @@ public class ReservationService {
     }
 
     public void deleteReservation(final Long id, final Long memberId) {
-        Reservation reservation = reservationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(NotFoundReservationException::new);
         validateReservedMember(reservation, memberId);
         reservationRepository.delete(reservation);
     }
 
     public Reservation updateReservation(final Long id, final Long memberId, final ReservationUpdateRequest request) {
-        Reservation reservation = reservationRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(NotFoundReservationException::new);
         validateReservedMember(reservation, memberId);
         ReservationDateTime reservationDateTime = reservationDateTimeRepository.findById(request.dateTimeId())
                 .orElseThrow();
