@@ -14,7 +14,7 @@ public class ClientConfig {
         this.randommerProperties = randommerProperties;
     }
 
-    @Bean
+    @Bean(name = "randommerRestClient")
     public RestClient createRandommerClient() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(randommerProperties.connectTimeout());

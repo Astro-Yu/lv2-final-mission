@@ -2,10 +2,12 @@ package finalmission.infrastructure.randommer;
 
 import finalmission.dto.request.RandommerRequest;
 import java.util.List;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 
 @Component
+@DependsOn("randommerRestClient")
 public class RandommerClient {
 
     private final RestClient restClient;
