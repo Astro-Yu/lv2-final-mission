@@ -26,7 +26,7 @@ public class ReservationDateTimeController {
 
     @GetMapping
     public List<ReservationDateTimeResponse> getReservationTimes() {
-        return reservationDateTimeService.findReservationDateTime()
+        return reservationDateTimeService.findReservationDateTimes()
                 .stream()
                 .map(ReservationDateTimeResponse::from)
                 .toList();
